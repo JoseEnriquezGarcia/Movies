@@ -89,7 +89,7 @@ public class UsuarioController {
             model.addAttribute("message", ex.getMessage());
             return "ErrorPage";
         }
-        return "redirect:/home";
+        return "redirect:/home/popular";
     }
 
     @GetMapping("/logout")

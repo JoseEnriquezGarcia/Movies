@@ -1,34 +1,43 @@
 <!DOCTYPE html>
 <html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{Layout}"
->
-  <head>
-    <title>Inicio-Movies</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body layout:fragment="body">
-    <a class="btn btn-danger" th:href="@{/login/logout}" role="button"
-      >Logout</a
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{Layout}"
     >
-    <div class="row justify-content-center mt-5">
-      <h1 class="text-center">Movies</h1>
-      <div th:each="movie : ${listMovies}" class="card" style="width: 18rem">
-        <div class="card-header">
-          <img
-            th:src="'https://image.tmdb.org/t/p/w500/' + ${movie.poster_path}"
-            class="card-img-top mt-2"
-            alt="Image Movie"
-          />
+    <head>
+        <title>Peliculas Populares</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body layout:fragment="body" style="background: #626e43;
+          background: linear-gradient(90deg,rgba(98, 110, 67, 1) 0%, rgba(31, 31, 54, 1) 36%, rgba(47, 105, 105, 1) 78%);">
+        <div class="row justify-content-center d-flex gap-3">
+            <h1 class="text-center mt-5">Peliculas Populares</h1>
+            <div th:each="movie : ${listMovies}" class="card mt-5" style="width: 18rem; background-color: #272838;">
+                <div class="card-body">
+                    <a><i class="bi bi-plus-circle-fill"></i></a>
+                    <img
+                        th:src="'https://image.tmdb.org/t/p/w500/' + ${movie.poster_path}"
+                        class="card-img-top mt-2"
+                        alt="Image Movie"
+                        style=""
+                        />
+                </div>
+                <div class="card-body">
+                    <h6 class="card-title text-center" style="fon" th:text="${movie.title}"></h6>
+                    <p>Popularidad</p>
+                    <div class="progress" role="progressbar" id="progress-bar" aria-label="Animated striped example" th:aria-valuenow="${movie.vote_average}" th:data-vote="${movie.vote_average}" aria-valuemin="0" aria-valuemax="100">
+                        <div id="progress-bar-style" class="progress-bar progress-bar-striped progress-bar-animated"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <h5 class="card-title" th:text="${movie.title}"></h5>
-          <p class="card-text" th:text="${movie.overview}"></p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-      </div>
-    </div>
-  </body>
+
+        <script>
+            $(document).ready(function () {
+                var data = $("#progress-bar").data("vote");
+                $("#progress-bar-style").css('width', data * 10 +'%');
+            });
+        </script>
+    </body>
 </html>

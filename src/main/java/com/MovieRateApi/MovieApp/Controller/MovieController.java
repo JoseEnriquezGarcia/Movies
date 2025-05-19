@@ -22,8 +22,8 @@ public class MovieController {
     
     private RestTemplate restTemplate = new RestTemplate();
     private String token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MDRkYmQ3ZWY4NDZkN2EwM2ZiNDg3MTcyNDQwOWRjNCIsIm5iZiI6MTc0NzMzMzUyMy42MjEsInN1YiI6IjY4MjYzMTkzNzFlMzAyM2ZmMWExNzZmYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.AEpAc1jTU2qBvrc6WDKNH5pJQmLF4VJKzz1aycAO0Vc";
-
-    @GetMapping
+    
+    @GetMapping("/popular")
     public String DiscoverMovie(@RequestParam(required = false) Integer page, HttpSession session, Model model) {
         
         if (session.getAttribute("session_id") != null) {

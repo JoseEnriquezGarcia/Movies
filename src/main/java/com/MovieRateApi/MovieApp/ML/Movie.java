@@ -13,4 +13,5 @@ public class Movie {
     private Date release_date;
     private String poster_path;
     private String original_language;
+    private int vote_average;
 }
