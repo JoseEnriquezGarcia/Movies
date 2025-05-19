@@ -1,8 +1,10 @@
 package com.MovieRateApi.MovieApp.ML;
 
-import java.util.Date;
+import java.util.List;
 
-public class Result {
-    public boolean success;
-    public String request_token;
+public class Result<T> {
+    public int page;
+    public List<T> results;
+    public int total_pages;
+    public int total_results;
 }

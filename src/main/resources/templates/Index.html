@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{Layout}"
+>
+  <head>
+    <title>Inicio-Movies</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body layout:fragment="body">
+    <a class="btn btn-danger" th:href="@{/login/logout}" role="button"
+      >Logout</a
+    >
+    <div class="row justify-content-center mt-5">
+      <h1 class="text-center">Movies</h1>
+      <div th:each="movie : ${listMovies}" class="card" style="width: 18rem">
+        <div class="card-header">
+          <img
+            th:src="'https://image.tmdb.org/t/p/w500/' + ${movie.poster_path}"
+            class="card-img-top mt-2"
+            alt="Image Movie"
+          />
+        </div>
+        <div class="card-body">
+          <h5 class="card-title" th:text="${movie.title}"></h5>
+          <p class="card-text" th:text="${movie.overview}"></p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

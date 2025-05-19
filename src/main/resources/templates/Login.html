@@ -15,19 +15,15 @@
                         <h1 class="text-center">Login</h1>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form th:action="@{/login/authLogin}" method="post" th:object="${usuario}">
                             <div class="mb-3">
-                                <label for="InputEmail1" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="InputEmail1" aria-describedby="email">
-                                <div id="email" class="form-text">We'll never share your email with anyone else.</div>
+                                <label for="InputUsername" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="InputUsername" aria-describedby="username" th:field="*{username}">
+                                <div id="username" class="form-text">We'll never share your email with anyone else.</div>
                             </div>
                             <div class="mb-3">
                                 <label for="InputPassword1" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="InputPassword1">
-                            </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                <input type="password" class="form-control" id="InputPassword1" th:field="*{password}">
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
