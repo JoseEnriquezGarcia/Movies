@@ -81,6 +81,7 @@ public class UsuarioController {
                     if (responseValidateToken.getStatusCode().is2xxSuccessful()) {
                         String sessionId = responseValidateToken.getBody().session_id;
                         session.setAttribute("session_id", sessionId);
+                        session.setAttribute("username", usuario.getUsername());
                     }
                 }
             }

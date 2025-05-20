@@ -12,10 +12,13 @@
     <body layout:fragment="body" style="background: #626e43;
           background: linear-gradient(90deg,rgba(98, 110, 67, 1) 0%, rgba(31, 31, 54, 1) 36%, rgba(47, 105, 105, 1) 78%);">
         <div class="row justify-content-center d-flex gap-3">
-            <h1 class="text-center mt-5">Peliculas Populares</h1>
-            <div th:each="movie : ${listMovies}" class="card mt-5" style="width: 18rem; background-color: #272838;">
+            <h1 class="text-center mt-5" style="font: bold">Peliculas Populares</h1>
+            <div th:each="movie : ${listMovies}" class="card mt-5" style="width: 18rem; background: #1a213b;
+                 background: linear-gradient(0deg,rgba(26, 33, 59, 1) 26%, rgba(50, 72, 79, 1) 64%);">
                 <div class="card-body">
-                    <a><i class="bi bi-plus-circle-fill"></i></a>
+                    <div class="hstack gap-3">
+                        <a class="p-2 ms-auto" type="button" th:href="@{/home/addFavorite}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Agregar a favoritos"><i class="bi bi-plus-circle-fill"></i></a>
+                    </div>
                     <img
                         th:src="'https://image.tmdb.org/t/p/w500/' + ${movie.poster_path}"
                         class="card-img-top mt-2"
@@ -24,19 +27,40 @@
                         />
                 </div>
                 <div class="card-body">
-                    <h6 class="card-title text-center" style="fon" th:text="${movie.title}"></h6>
-                    <p>Popularidad</p>
-                    <div class="progress" role="progressbar" id="progress-bar" aria-label="Animated striped example" th:aria-valuenow="${movie.vote_average}" th:data-vote="${movie.vote_average}" aria-valuemin="0" aria-valuemax="100">
-                        <div id="progress-bar-style" class="progress-bar progress-bar-striped progress-bar-animated"></div>
+                    <h6 class="card-title text-center" th:text="${movie.title}"></h6>
+                    <h6>Popularidad</h6>
+                    <div class="progress value-progress" role="progressbar" aria-label="Animated striped example" th:aria-valuenow="${movie.vote_average}" th:data-vote="${movie.vote_average}" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-style"  th:text="${#numbers.formatDecimal(movie.vote_average * 10, 1, 0)} + '%'"></div>
                     </div>
+                    <h6>Fecha de Lanzmiento</h6>
+                    <p th:text="${movie.release_date}"></p>
                 </div>
             </div>
         </div>
 
         <script>
+            //Enable Tooltips
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
             $(document).ready(function () {
-                var data = $("#progress-bar").data("vote");
-                $("#progress-bar-style").css('width', data * 10 +'%');
+                $(".value-progress").each(function () {
+                    var data = parseFloat($(this).data("vote"));
+                    var progress = $(this).find(".progress-bar-style");
+                    progress.css('width', data * 10 + '%');
+
+                    if (data == 0) {
+                        progress.css('width', '10%');
+                    }
+
+                    if (data >= 7) {
+                        progress.css('background', 'linear-gradient(#22C1C3, #FDBB2D)');
+                    } else if (data >= 5) {
+                        progress.css('background', 'linear-gradient(#f7971e, #ffd200)');
+                    } else {
+                        progress.css('background', 'linear-gradient(#ff416c, #ff4b2b)')
+                    }
+                });
             });
         </script>
     </body>

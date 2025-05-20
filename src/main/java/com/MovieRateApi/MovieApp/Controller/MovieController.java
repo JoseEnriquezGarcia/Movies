@@ -19,13 +19,13 @@ import org.springframework.web.client.RestTemplate;
 @Controller
 @RequestMapping("/home")
 public class MovieController {
-    
+
     private RestTemplate restTemplate = new RestTemplate();
     private String token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MDRkYmQ3ZWY4NDZkN2EwM2ZiNDg3MTcyNDQwOWRjNCIsIm5iZiI6MTc0NzMzMzUyMy42MjEsInN1YiI6IjY4MjYzMTkzNzFlMzAyM2ZmMWExNzZmYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.AEpAc1jTU2qBvrc6WDKNH5pJQmLF4VJKzz1aycAO0Vc";
-    
+
     @GetMapping("/popular")
     public String DiscoverMovie(@RequestParam(required = false) Integer page, HttpSession session, Model model) {
-        
+
         if (session.getAttribute("session_id") != null) {
 
             HttpHeaders httpHeader = new HttpHeaders();
@@ -41,9 +41,9 @@ public class MovieController {
                 });
 
                 Result result = getMovies.getBody();
-                
+
                 model.addAttribute("listMovies", result.results);
-                
+
                 return "Index";
             } catch (HttpStatusCodeException ex) {
                 model.addAttribute("status", ex.getStatusCode());
@@ -53,5 +53,25 @@ public class MovieController {
         } else {
             return "redirect:/login";
         }
+    }
+
+    @GetMapping("/addFavorite")
+    public String AddFavorite(HttpSession session, Model model) {
+
+        String sessionId = session.getAttribute("session_id").toString();
+        String username = session.getAttribute("username").toString();
+
+        try {
+            ResponseEntity<Result> response = restTemplate.exchange("https://api.themoviedb.org/3/account/" + username + "/favorite?session_id=" + sessionId,
+                    HttpMethod.GET,
+                    HttpEntity.EMPTY,
+                    new ParameterizedTypeReference<Result>() {
+            });
+        } catch (HttpStatusCodeException ex) {
+            model.addAttribute("status", ex.getStatusCode());
+            model.addAttribute("message", ex.getMessage());
+            return "Error";
+        }
+        return "redirect:/home/popular";
     }
 }

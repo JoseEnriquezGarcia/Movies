@@ -10,8 +10,8 @@ public class Movie {
     private String title;
     private String original_title;
     private String overview;
-    private Date release_date;
+    private String release_date;
     private String poster_path;
     private String original_language;
-    private int vote_average;
+    private float vote_average;
 }
