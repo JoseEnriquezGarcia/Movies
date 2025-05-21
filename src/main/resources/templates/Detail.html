@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{Layout}"
+    >
+
+
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body layout:fragment="body" style="background-color: #221E22;">
+        <div class="jumbotron" th:style="|background: url(https://image.tmdb.org/t/p/original/${movie.backdrop_path}) no-repeat center center fixed;
+             -webkit-background-size: cover;
+             -moz-background-size: cover;
+             background-size: cover;
+             -o-background-size: cover;|">
+            <h1 class="display-4">Hello, world!</h1>
+            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            <hr class="my-5">
+            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            </p>
+        </div>
+    </body>
+</html>
