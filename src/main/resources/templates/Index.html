@@ -17,7 +17,7 @@
                  background: linear-gradient(0deg,rgba(26, 33, 59, 1) 26%, rgba(50, 72, 79, 1) 64%);">
                 <div class="card-body">
                     <div class="hstack gap-3">
-                        <a class="p-2 ms-auto btn btn-outline-primary favorite" type="button" th:href="@{/home/addFavoriteMovie/{media_id}(media_id = ${movie.id})}" data-bs-toggle="tooltip" th:data-id="${movie.id}" data-bs-placement="top" data-bs-title="Agregar a favoritos" style="z-index: 10;"></a>
+                        <a class="p-2 ms-auto btn btn-outline-primary favorite" th:href="@{/home/addFavoriteMovie/{media_id}(media_id = ${movie.id})}" data-bs-toggle="tooltip" th:data-id="${movie.id}" data-bs-placement="top" data-bs-title="Agregar a favoritos" style="z-index: 10;" hidden></a>
                     </div>
                     <img
                         th:src="'https://image.tmdb.org/t/p/w500/' + ${movie.poster_path}"
@@ -73,15 +73,20 @@
                     dataType: 'json',
                     headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MDRkYmQ3ZWY4NDZkN2EwM2ZiNDg3MTcyNDQwOWRjNCIsIm5iZiI6MTc0NzMzMzUyMy42MjEsInN1YiI6IjY4MjYzMTkzNzFlMzAyM2ZmMWExNzZmYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.AEpAc1jTU2qBvrc6WDKNH5pJQmLF4VJKzz1aycAO0Vc'},
                     success: function (data, textStatus, jqXHR) {
-                        $.each(data.results, function (i, movie) {
-                            $(".favorite").each(function () {
-                                var data = $(this).data("id");
-                                if (movie.id == data) {
-                                    $(this).append("<i class='bi bi-chat-heart-fill'></i>");
-                                }else{
-                                    $(this).append("<i class='bi bi-plus-circle-fill'></i>");
-                                }
-                            });
+                        let favoriteMoviesId = data.results.map(movie => movie.id);
+
+                        $(".favorite").each(function () {
+
+                            var data = $(this).data("id");
+                            if (favoriteMoviesId.includes(data)) {
+                                $(this)
+                                        .removeClass("btn-outline-primary")
+                                        .addClass("btn-success active")
+                                        .append("<i class='bi bi-bookmark-heart-fill'></i>");
+                            } else {
+                                $(this).append("<i class='bi bi-bookmark-heart'></i>");
+                            }
+                            $(this).removeAttr("hidden");
                         });
                     },
                 });
